@@ -1,117 +1,185 @@
-/*.nav-link:hover {
+    /*.nav-link:hover {
     background-color: black;
     color: white !important;
     transform: skewX(-10deg);
 }
 
 */
-
-nav .circle ul li a {
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
-
-nav .circle ul li a:after {
-    display: block;
-    position: absolute;
-    margin: 0;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    content: '.';
-    color: transparent;
-    width: 1px;
-    height: 1px;
-    border-radius: 50%;
-    background: transparent;
-}
-
-nav .circle ul li a:hover:after {
-    -webkit-animation: circle 1.5s ease-in forwards;
-}
-
-@keyframes circle {
-    0% {
+    
+    body::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    body::-webkit-scrollbar-thumb {
+        background-color: red;
+    }
+    
+    nav .circle ul li a {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+    
+    nav .circle ul li a:after {
+        display: block;
+        position: absolute;
+        margin: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        content: '.';
+        color: transparent;
         width: 1px;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        margin: auto;
         height: 1px;
-        z-index: -1;
-        background: rgb(247, 109, 109);
-        border-radius: 100%;
+        border-radius: 50%;
+        background: transparent;
     }
-    100% {
-        background: rgb(247, 109, 109);
-        height: 5000%;
-        width: 5000%;
-        z-index: -1;
+    
+    nav .circle ul li a:hover:after {
+        -webkit-animation: circle 1.5s ease-in forwards;
+    }
+    
+    @keyframes circle {
+        0% {
+            width: 1px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            height: 1px;
+            z-index: -1;
+            background: rgb(247, 109, 109);
+            border-radius: 100%;
+        }
+        100% {
+            background: rgb(247, 109, 109);
+            height: 5000%;
+            width: 5000%;
+            z-index: -1;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border-radius: 0;
+        }
+    }
+    
+    .imgsinborde {
+        padding: 0px !important;
+        border: none !important;
+        border-radius: 0px !important;
+        filter: none;
+    }
+    
+    .imgsinborde:hover {
+        filter: brightness(0.7);
+    }
+    
+    @media screen and (max-width: 600px) {
+        .imgicon {
+            width: 100%;
+        }
+        .abs {
+            position: relative !important;
+        }
+    }
+    
+    @media screen and (max-width: 320px) {
+        .abs1 {
+            padding: 10px !important;
+        }
+    }
+    
+    .form-control:focus {
+        color: #212529;
+        background-color: #fff;
+        border-color: #000000;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgb(0 0 0 / 25%);
+    }
+    
+    .bannerimg:hover {
+        transform: scale(1.05);
+        transition: 2s;
+    }
+    
+    .sexcard {
+        border: none;
+    }
+    
+    .sexcard:hover {
+        animation: 1s forwards caja;
+    }
+    
+    @keyframes caja {
+        0% {
+            transform: translateY(0px);
+        }
+        100% {
+            transform: translateY(-10px);
+            box-shadow: 0px 20px 45px #0000006e;
+        }
+    }
+    /* Circle */
+    
+    .circle2:hover div>img {
+        animation: 2s img1 forwards;
+    }
+    
+    @keyframes img1 {
+        0% {}
+        100% {
+            transform: scale(1.05);
+        }
+    }
+    
+    .circle2 div:after {
+        display: block;
+        position: absolute;
+        margin: 0;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
-        margin: auto;
-        border-radius: 0;
+        content: '.';
+        color: transparent;
+        width: 1px;
+        height: 1px;
+        border-radius: 50%;
+        background: transparent;
     }
-}
-
-.imgsinborde {
-    padding: 0px !important;
-    border: none !important;
-    border-radius: 0px !important;
-    filter: none;
-}
-
-.imgsinborde:hover {
-    filter: brightness(0.7);
-}
-
-@media screen and (max-width: 600px) {
-    .imgicon {
-        width: 100%;
+    
+    .circle2 div:hover:after {
+        -webkit-animation: circle2 1.5s ease-in forwards;
     }
-    .abs {
-        position: relative !important;
+    
+    @keyframes circle2 {
+        0% {
+            width: 1px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            height: 1px;
+            z-index: -1;
+            background: #eee;
+            border-radius: 100%;
+        }
+        100% {
+            background: rgba(196, 78, 78, 0.925);
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border-radius: 0;
+            color: white;
+        }
     }
-}
-
-@media screen and (max-width: 320px) {
-    .abs1 {
-        padding: 10px !important;
-    }
-}
-
-.form-control:focus {
-    color: #212529;
-    background-color: #fff;
-    border-color: #000000;
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgb(0 0 0 / 25%);
-}
-
-.bannerimg:hover {
-    transform: scale(1.05);
-    transition: 2s;
-}
-
-.sexcard {
-    border: none;
-}
-
-.sexcard:hover {
-    animation: 1s forwards caja;
-}
-
-@keyframes caja {
-    0% {
-        transform: translateY(0px);
-    }
-    100% {
-        transform: translateY(-10px);
-        box-shadow: 0px 20px 45px #0000006e;
-    }
-}
