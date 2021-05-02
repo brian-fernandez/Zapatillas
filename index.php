@@ -279,32 +279,60 @@
         </div>
         <div class="container-fluid">
             <div class="row ">
-                <div class="col-md-auto p-0 m-lg-auto  ">
+
+
+            <?php
+                
+                include "../php/conexion.php";
+
+                $consulta = "SELECT * FROM producto WHERE stock=1 ORDER BY fechaInicio ASC";
+                $i = 0 ;
+                $usuario = [];
+                while ($row = mysqli_fetch_assoc($resultado)){
+                            
+                            $usuario[$i]['id'] =$row['cod'];
+                            $usuario[$i]['nombre'] =$row['nombre'];
+                            $usuario[$i]['marca'] =$row['marca'];
+                            $usuario[$i]['precio'] =$row['precio'];
+                            $usuario[$i]['stock'] =$row['stock'];
+                            $usuario[$i]['cantidad'] =$row['cantidad'];
+                            $usuario[$i]['foto'] =$row['foto'];
+                            $usuario[$i]['fechainicio'] =$row['fechainicio'];
+                            $usuario[$i]['categoria'] =$row['categoria'];
+                            $i++;
+                
+                
+                
+                }
+                
+
+                foreach ($$usuario as $usuarios) {
+                    ?>
+                     <div class="col-md-auto p-0 m-lg-auto">
                     <div class="card m-1" style="width: 18rem;">
                         <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p>Hombre</p>
-                            <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                            <p>NIKE</p>
-                            <p class="card-text">50bs</p>
-                            <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
+                        <p><?php echo $usuarios['categoria'];?></p>
+                        <h5 class="card-title"><?php $usuarios['nombre']; ?></h5>
+                        <p><?php $usuarios['marca']; ?></p>
+                        <p class="card-text"><?php $usuarios['precio']; ?></</p>
+                        <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
                             <button class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</button>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-auto p-0 m-lg-auto">
-                    <div class="card m-1" style="width: 18rem;">
-                        <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p>Hombre</p>
-                            <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                            <p>NIKE</p>
-                            <p class="card-text">50bs</p>
-                            <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
-                            <button class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</button>
                         </div>
-                    </div>
                 </div>
+                <?php
+                }
+
+                ?>
+                
+               
+                            
+                           
+                            
+                            
+                            
+                  
                 <div class="col-md-auto p-0 m-lg-auto ">
                     <div class="card m-1" style="width: 18rem;">
                         <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
