@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Reserva</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/fonts.css">
 </head>
 
 <body>
-
     <!--Lista-->
 
 
@@ -203,32 +202,33 @@
             <div class="container-fluid">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
                 <div class="collapse navbar-collapse circle" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-style: oblique;">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.html">INICIO /</a>
+                            <a class="nav-link" href="../index.php">INICIO /</a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          MARCAS
-                        </a>
+                              MARCAS
+                            </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">NIKE</a></li>
-                                <li><a class="dropdown-item" href="#">ADIDAS</a></li>
+                                <li><a class="dropdown-item" href="producto.php?marca=New Balance&categoria">New Balance</a></li>
+                                <li><a class="dropdown-item" href="producto.php?marca=Puma&categoria">Puma</a></li>
+                                <li><a class="dropdown-item" href="producto.php?marca=Asics&categoria">Asics</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="producto.html">HOMBRE /</a>
+                            <a class="nav-link" href="producto.php?categoria=varon&marca">HOMBRE /</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="producto.html">MUJER /</a>
+                            <a class="nav-link" href="producto.php?categoria=mujer&marca">MUJER /</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="ayuda.html">CONTACTANOS</a>
+                            <a class="nav-link" href="ayuda.php">CONTACTANOS</a>
                         </li>
 
 
@@ -241,124 +241,72 @@
     </div>
 
 
-
-
-    <div class="container-fluid">
+    <div class="container p-3">
         <div class="row">
-            <div class="col-lg-3 border border-1">
-                <ul class="list-group">
-                    <br>
-                    <h2>Categorias</h2>
 
-                    <li class="list-group-item d-flex justify-content-between align-items-center ">
+<?php
 
-                        <a href="" class="nav-link text-dark">NIKE</a>
-                        <span class="badge bg-dark rounded-pill">14</span>
+$dato = $_GET['idProducto'];
+
+    include '../php/conexion.php';
+
+     $consulta = "SELECT * FROM producto WHERE id=$dato";
+     $ejecutar= $conexion->query($consulta);
+    $i = 0 ;
+    $usuario = [];
+    while ($fila = $ejecutar->fetch_array()){
+                
+                $usuario[$i]['id'] =$fila['id'];
+                $usuario[$i]['nombre'] =$fila['nombre'];
+                $usuario[$i]['marca'] =$fila['marca'];
+                $usuario[$i]['precio'] =$fila['precio'];
+                $usuario[$i]['stock'] =$fila['stock'];
+                $usuario[$i]['cantidad'] =$fila['cantidad'];
+                $usuario[$i]['foto'] =$fila['foto'];
+                $usuario[$i]['fechaInicio'] =$fila['fechaInicio'];
+                $usuario[$i]['categoria'] =$fila['categoria'];
+                $i++;
+    
+    
+    
+    }
+    ?>
+    <div class="col-lg-6 border border-1 p-2">
+    <div class="card" style="width: 18rem;">
+        <img  src="data:image/jpg;base64,<?php echo base64_encode($usuario[0]['foto']); ?>" class="card-img-top" alt="...">
+        <div class="card-body">
+        <p><?php echo $usuario[0]['categoria'];?></p>
+            <h5 class="card-title"><?php echo $usuario[0]['nombre']; ?></h5>
+            <p><?php  echo $usuario[0]['marca']; ?></p>
+            <p class="card-text">50bs</p>
+
+        </div>
+    </div>
+</div>
 
 
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="" class="nav-link text-dark">ADIDAS</a>
-                        <span class="badge bg-dark rounded-pill">14</span>
 
 
-                    </li>
 
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="" class="nav-link text-dark">Hombre</a>
-                        <span class="badge bg-dark rounded-pill">2</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="" class="nav-link text-dark">Mujer</a>
-                        <span class="badge bg-dark rounded-pill">1</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-9 border border-1 p-lg-5">
-                <div class="row row-4">
-                    <div class="col-lg-4 ">
-                        <div class="card m-1" style="width: 18rem;">
-                            <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <p>Hombre</p>
-                                <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                                <p>NIKE</p>
-                                <p class="card-text">50bs</p>
-                                <a href="reserva.html" class="btn btn-dark">Reservar</a>
-                                <a href="#" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 ">
-                        <div class="card m-1" style="width: 18rem;">
-                            <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <p>Hombre</p>
-                                <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                                <p>NIKE</p>
-                                <p class="card-text">50bs</p>
-                                <a href="reserva.html" class="btn btn-dark">Reservar</a>
-                                <a href="#" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 ">
-                        <div class="card m-1" style="width: 18rem;">
-                            <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <p>Hombre</p>
-                                <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                                <p>NIKE</p>
-                                <p class="card-text">50bs</p>
-                                <a href="reserva.html" class="btn btn-dark">Reservar</a>
-                                <a href="#" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 ">
-                        <div class="card m-1" style="width: 18rem;">
-                            <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <p>Hombre</p>
-                                <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                                <p>NIKE</p>
-                                <p class="card-text">50bs</p>
-                                <a href="reserva.html" class="btn btn-dark">Reservar</a>
-                                <a href="#" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 ">
-                        <div class="card m-1" style="width: 18rem;">
-                            <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <p>Hombre</p>
-                                <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                                <p>NIKE</p>
-                                <p class="card-text">50bs</p>
-                                <a href="reserva.html" class="btn btn-dark">Reservar</a>
-                                <a href="#" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 ">
-                        <div class="card m-1" style="width: 18rem;">
-                            <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <p>Hombre</p>
-                                <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                                <p>NIKE</p>
-                                <p class="card-text">50bs</p>
-                                <a href="reserva.html" class="btn btn-dark">Reservar</a>
-                                <a href="#" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+          
+            <div class="col-lg-6 border border-1 p-4">
+                <h3>Datos Personales</h3>
+
+                <p>Nombre</p>
+                <br>
+                <p>Apellido</p>
+                <br>
+                <p>telefono</p>
+                <br>
+                <p>Correo</p>
+
+
+                <button class="btn btn-success">Realizar reserva</button>
+
             </div>
         </div>
     </div>
-
 
 
 </body>

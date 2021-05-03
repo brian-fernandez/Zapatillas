@@ -203,32 +203,33 @@
             <div class="container-fluid">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
                 <div class="collapse navbar-collapse circle" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-style: oblique;">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.html">INICIO /</a>
+                            <a class="nav-link" href="../index.php">INICIO /</a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      MARCAS
-                    </a>
+                              MARCAS
+                            </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">NIKE</a></li>
-                                <li><a class="dropdown-item" href="#">ADIDAS</a></li>
+                                <li><a class="dropdown-item" href="producto.php?marca=New Balance&categoria">New Balance</a></li>
+                                <li><a class="dropdown-item" href="producto.php?marca=Puma&categoria">Puma</a></li>
+                                <li><a class="dropdown-item" href="producto.php?marca=Asics&categoria">Asics</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="producto.html">HOMBRE /</a>
+                            <a class="nav-link" href="producto.php?categoria=varon&marca">HOMBRE /</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="producto.html">MUJER /</a>
+                            <a class="nav-link" href="producto.php?categoria=mujer&marca">MUJER /</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="ayuda.html">CONTACTANOS</a>
+                            <a class="nav-link" href="ayuda.php">CONTACTANOS</a>
                         </li>
 
 

@@ -1,3 +1,40 @@
+
+<?php 
+
+function obtenernumvaron()
+{
+    include "../php/conexion.php";
+      $consulta = ( "SELECT COUNT(1) as 'numero' FROM producto WHERE categoria='varon'");
+      $ejecutar= $conexion->query($consulta);
+      $total = $ejecutar ->fetch_row();
+    
+      
+      echo $total[0];
+     
+      
+      
+}
+function obtenernummujer()
+{
+    include "../php/conexion.php";
+      $consulta = ( "SELECT COUNT(1) as 'numero' FROM producto WHERE categoria='mujer'");
+      $ejecutar= $conexion->query($consulta);
+      $total = $ejecutar ->fetch_row();
+    
+      
+      echo $total[0];
+     
+      
+      
+}
+
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,13 +42,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva</title>
+    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/fonts.css">
 </head>
 
 <body>
+
     <!--Lista-->
 
 
@@ -202,32 +240,33 @@
             <div class="container-fluid">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
                 <div class="collapse navbar-collapse circle" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-style: oblique;">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.html">INICIO /</a>
+                            <a class="nav-link" href="../index.php">INICIO /</a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          MARCAS
-                        </a>
+                              MARCAS
+                            </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">NIKE</a></li>
-                                <li><a class="dropdown-item" href="#">ADIDAS</a></li>
+                                <li><a class="dropdown-item" href="producto.php?marca=New Balance&categoria">New Balance</a></li>
+                                <li><a class="dropdown-item" href="producto.php?marca=Puma&categoria">Puma</a></li>
+                                <li><a class="dropdown-item" href="producto.php?marca=Asics&categoria">Asics</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="producto.html">HOMBRE /</a>
+                            <a class="nav-link" href="producto.php?categoria=varon&marca">HOMBRE /</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="producto.html">MUJER /</a>
+                            <a class="nav-link" href="producto.php?categoria=mujer&marca">MUJER /</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="ayuda.html">CONTACTANOS</a>
+                            <a class="nav-link" href="ayuda.php">CONTACTANOS</a>
                         </li>
 
 
@@ -239,36 +278,118 @@
 
     </div>
 
+<?php 
 
-    <div class="container p-3">
+$dato = $_GET["marca"];
+str_replace('%20',' ',$dato);
+$categoria = $_GET["categoria"];
+
+
+?>
+
+
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-6 border border-1 p-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                        <p class="card-text">50bs</p>
+            <div class="col-lg-3 border border-1">
+                <ul class="list-group">
+                    <br>
+                    <h2>Categorias</h2>
 
-                    </div>
-                </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-center ">
+
+                        <a href="producto.php?marca=New Balance&categoria" class="nav-link text-dark">New Balance</a>
+                        
+
+
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="producto.php?marca=Puma&categoria" class="nav-link text-dark">Puma</a>
+                       
+
+
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="producto.php?marca=Asics&categoria" class="nav-link text-dark">Asics</a>
+                       
+
+
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="producto.php?categoria=varon&marca" class="nav-link text-dark">Varon</a>
+                        <span class="badge bg-dark rounded-pill"><?php obtenernumvaron();?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="producto.php?categoria=mujer&marca" class="nav-link text-dark">Mujer</a>
+                        <span class="badge bg-dark rounded-pill"><?php obtenernummujer(); ?></span>
+                    </li>
+                </ul>
             </div>
-            <div class="col-lg-6 border border-1 p-4">
-                <h3>Datos Personales</h3>
+            <div class="col-lg-9 border border-1 p-lg-5">
+                <div class="row row-4">
 
-                <p>Nombre</p>
-                <br>
-                <p>Apellido</p>
-                <br>
-                <p>telefono</p>
-                <br>
-                <p>Correo</p>
+                <?php
+                include "../php/conexion.php";
+
+if (is_string($dato)) {
+    $consulta = "SELECT * FROM producto WHERE marca='".$dato."'|| categoria='".$categoria."'ORDER BY fechaInicio ASC";
+    $ejecutar= $conexion->query($consulta);
+    
+}
 
 
-                <button class="btn btn-success">Realizar reserva</button>
 
+
+
+                
+                $i = 0 ;
+                $usuario = [];
+                while ($fila = $ejecutar->fetch_array()){
+                            
+                            $usuario[$i]['id'] =$fila['id'];
+                            $usuario[$i]['nombre'] =$fila['nombre'];
+                            $usuario[$i]['marca'] =$fila['marca'];
+                            $usuario[$i]['precio'] =$fila['precio'];
+                            $usuario[$i]['stock'] =$fila['stock'];
+                            $usuario[$i]['cantidad'] =$fila['cantidad'];
+                            $usuario[$i]['foto'] =$fila['foto'];
+                            $usuario[$i]['fechaInicio'] =$fila['fechaInicio'];
+                            $usuario[$i]['categoria'] =$fila['categoria'];
+                            $i++;
+                
+                
+                
+                }
+                
+
+                foreach ($usuario as $usuarios) {
+                    ?>
+                     <div class="col-lg-4 ">
+                        <div class="card m-1" style="width: 18rem;">
+                        <img src="data:image/jpg;base64,<?php echo base64_encode($usuarios['foto']); ?>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <p><?php echo $usuarios['categoria'];?></p>
+                        <h5 class="card-title"><?php echo $usuarios['nombre']; ?></h5>
+                        <p><?php  echo $usuarios['marca']; ?></p>
+                        <p class="card-text"><?php echo $usuarios['precio']; ?> bs</p>
+                                <a href="reserva.php" class="btn btn-dark">Reservar</a>
+                                <a href="#" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+
+                ?>
+                    
+                    
+                   
+                    
+                </div>
             </div>
         </div>
     </div>
+
 
 
 </body>

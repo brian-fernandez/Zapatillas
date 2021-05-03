@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zapatillas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fonts.css">
 
 </head>
 
@@ -209,7 +209,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-style: oblique;">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">INICIO /</a>
+                            <a class="nav-link" href="index.php">INICIO /</a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -217,18 +217,19 @@
                               MARCAS
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">NIKE</a></li>
-                                <li><a class="dropdown-item" href="#">ADIDAS</a></li>
+                                <li><a class="dropdown-item" href="enlaces/producto.php?marca=New Balance&categoria">New Balance</a></li>
+                                <li><a class="dropdown-item" href="enlaces/producto.php?marca=Puma&categoria">Puma</a></li>
+                                <li><a class="dropdown-item" href="enlaces/producto.php?marca=Asics&categoria">Asics</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="enlaces/producto.html">HOMBRE /</a>
+                            <a class="nav-link" href="enlaces/producto.php?categoria=varon&marca">HOMBRE /</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="enlaces/producto.html">MUJER /</a>
+                            <a class="nav-link" href="enlaces/producto.php?categoria=mujer&marca">MUJER /</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="enlaces/ayuda.html">CONTACTANOS</a>
+                            <a class="nav-link" href="enlaces/ayuda.php">CONTACTANOS</a>
                         </li>
 
 
@@ -246,13 +247,13 @@
         <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="/img/banner/11new-balance1_1_.jpg" class="d-block w-100 bannerimg" alt="..." data-bs-interval="100">
+                    <img src="img/banner/11new-balance1_1_.jpg" class="d-block w-100 bannerimg" alt="..." data-bs-interval="100">
                 </div>
                 <div class="carousel-item">
-                    <img src="/img/banner/banner-web--break-da-rules.jpg" class="d-block w-100 bannerimg" alt="..." data-bs-interval="100">
+                    <img src="img/banner/banner-web--break-da-rules.jpg" class="d-block w-100 bannerimg" alt="..." data-bs-interval="100">
                 </div>
                 <div class="carousel-item">
-                    <img src="/img/banner/new-balance.jpg" class="d-block w-100 bannerimg" alt="..." data-bs-interval="100">
+                    <img src="img/banner/new-balance.jpg" class="d-block w-100 bannerimg" alt="..." data-bs-interval="100">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -283,22 +284,23 @@
 
             <?php
                 
-                include "../php/conexion.php";
+                include "php/conexion.php";
 
                 $consulta = "SELECT * FROM producto WHERE stock=1 ORDER BY fechaInicio ASC";
+                $ejecutar= $conexion->query($consulta);
                 $i = 0 ;
                 $usuario = [];
-                while ($row = mysqli_fetch_assoc($resultado)){
+                while ($fila = $ejecutar->fetch_array()){
                             
-                            $usuario[$i]['id'] =$row['cod'];
-                            $usuario[$i]['nombre'] =$row['nombre'];
-                            $usuario[$i]['marca'] =$row['marca'];
-                            $usuario[$i]['precio'] =$row['precio'];
-                            $usuario[$i]['stock'] =$row['stock'];
-                            $usuario[$i]['cantidad'] =$row['cantidad'];
-                            $usuario[$i]['foto'] =$row['foto'];
-                            $usuario[$i]['fechainicio'] =$row['fechainicio'];
-                            $usuario[$i]['categoria'] =$row['categoria'];
+                            $usuario[$i]['id'] =$fila['id'];
+                            $usuario[$i]['nombre'] =$fila['nombre'];
+                            $usuario[$i]['marca'] =$fila['marca'];
+                            $usuario[$i]['precio'] =$fila['precio'];
+                            $usuario[$i]['stock'] =$fila['stock'];
+                            $usuario[$i]['cantidad'] =$fila['cantidad'];
+                            $usuario[$i]['foto'] =$fila['foto'];
+                            $usuario[$i]['fechaInicio'] =$fila['fechaInicio'];
+                            $usuario[$i]['categoria'] =$fila['categoria'];
                             $i++;
                 
                 
@@ -306,17 +308,17 @@
                 }
                 
 
-                foreach ($$usuario as $usuarios) {
+                foreach ($usuario as $usuarios) {
                     ?>
                      <div class="col-md-auto p-0 m-lg-auto">
                     <div class="card m-1" style="width: 18rem;">
-                        <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
+                        <img src="data:image/jpg;base64,<?php echo base64_encode($usuarios['foto']); ?>" class="card-img-top" alt="...">
                         <div class="card-body">
                         <p><?php echo $usuarios['categoria'];?></p>
-                        <h5 class="card-title"><?php $usuarios['nombre']; ?></h5>
-                        <p><?php $usuarios['marca']; ?></p>
-                        <p class="card-text"><?php $usuarios['precio']; ?></</p>
-                        <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
+                        <h5 class="card-title"><?php echo $usuarios['nombre']; ?></h5>
+                        <p><?php  echo $usuarios['marca']; ?></p>
+                        <p class="card-text"><?php echo $usuarios['precio']; ?> bs</p>
+                        <?php  echo '<a class="btn btn-dark" href="enlaces/reserva.php?idProducto='.$usuarios['id'].'">'   ?> Reservar</a>
                             <button class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</button>
                         </div>
                         </div>
@@ -325,40 +327,7 @@
                 }
 
                 ?>
-                
-               
-                            
-                           
-                            
-                            
-                            
-                  
-                <div class="col-md-auto p-0 m-lg-auto ">
-                    <div class="card m-1" style="width: 18rem;">
-                        <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p>Hombre</p>
-                            <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                            <p>NIKE</p>
-                            <p class="card-text">50bs</p>
-                            <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
-                            <button class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-auto p-0 m-lg-auto ">
-                    <div class="card m-1" style="width: 18rem;">
-                        <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p>Hombre</p>
-                            <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                            <p>NIKE</p>
-                            <p class="card-text">50bs</p>
-                            <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
-                            <button class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</button>
-                        </div>
-                    </div>
-                </div>
+   
             </div>
         </div>
 
@@ -431,80 +400,65 @@
         </div>
     </div>
 
-
-    <div class=" container-fluid p-3">
-        <div class="row ">
+    
+    <div class="container-fluid">
+    <div class="row ">
             <div class="col-md-12 p-5">
                 <h1 class="text-center ">
                     Productos de calidad
                 </h1>
             </div>
-        </div>
-        <div class="container-fluid">
+    </div>
+  
+        
             <div class="row ">
-                <div class="col-md-auto p-0 m-lg-auto  ">
+            <?php
+                include "php/conexion.php";
+
+                $consulta = "SELECT * FROM producto WHERE stock=1 ORDER BY fechaInicio ASC";
+                $ejecutar= $conexion->query($consulta);
+                $i = 0 ;
+                $usuario = [];
+                while ($fila = $ejecutar->fetch_array()){
+                            
+                            $usuario[$i]['id'] =$fila['id'];
+                            $usuario[$i]['nombre'] =$fila['nombre'];
+                            $usuario[$i]['marca'] =$fila['marca'];
+                            $usuario[$i]['precio'] =$fila['precio'];
+                            $usuario[$i]['stock'] =$fila['stock'];
+                            $usuario[$i]['cantidad'] =$fila['cantidad'];
+                            $usuario[$i]['foto'] =$fila['foto'];
+                            $usuario[$i]['fechaInicio'] =$fila['fechaInicio'];
+                            $usuario[$i]['categoria'] =$fila['categoria'];
+                            $i++;
+                
+                
+                
+                }
+                
+
+                foreach ($usuario as $usuarios) {
+                    ?>
+                     <div class="col-md-auto p-0 m-lg-auto">
                     <div class="card m-1" style="width: 18rem;">
-                        <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
+                        <img src="data:image/jpg;base64,<?php echo base64_encode($usuarios['foto']); ?>" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p>Hombre</p>
-                            <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                            <p>NIKE</p>
-                            <p class="card-text">50bs</p>
-                            <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
+                        <p><?php echo $usuarios['categoria'];?></p>
+                        <h5 class="card-title"><?php echo $usuarios['nombre']; ?></h5>
+                        <p><?php  echo $usuarios['marca']; ?></p>
+                        <p class="card-text"><?php echo $usuarios['precio']; ?> bs</p>
+                        <?php  echo '<a class="btn btn-dark" href="enlaces/reserva.php?idProducto='.$usuarios['id'].'">'   ?> Reservar</a>
                             <button class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</button>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-auto p-0 m-lg-auto">
-                    <div class="card m-1" style="width: 18rem;">
-                        <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p>Hombre</p>
-                            <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                            <p>NIKE</p>
-                            <p class="card-text">50bs</p>
-                            <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
-                            <button class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</button>
                         </div>
-                    </div>
                 </div>
-                <div class="col-md-auto p-0 m-lg-auto ">
-                    <div class="card m-1" style="width: 18rem;">
-                        <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p>Hombre</p>
-                            <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                            <p>NIKE</p>
-                            <p class="card-text">50bs</p>
-                            <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
-                            <button class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-auto p-0 m-lg-auto ">
-                    <div class="card m-1" style="width: 18rem;">
-                        <img src="../img/zapatilla1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p>Hombre</p>
-                            <h5 class="card-title">ZAPATILLAS RUNNING ADIDAS DURAMO SL MUJER NEGRA</h5>
-                            <p>NIKE</p>
-                            <p class="card-text">50bs</p>
-                            <a href="enlaces/reserva.html" class="btn btn-dark">Reservar</a>
-                            <button class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</button>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                }
+
+                ?>
+   
             </div>
         </div>
-
-
-
-        <br>
-        <br>
-        <br>
-        <br>
-
-    </div>
     <div class="container-fluid p-5 bg-dark text-light banner1 ">
         <div class="row ">
             <div class="col-sm-7 p-lg-5 ">
