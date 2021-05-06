@@ -1,3 +1,19 @@
+<?php
+        include "../php/conexion.php";
+
+            $idadmin = $_GET['idusu'];
+
+
+        $consulta = "SELECT * from admin where ci = $idadmin";
+        $ejecutar= $conexion->query($consulta);
+        $filadmin = $ejecutar->fetch_array();
+
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +22,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/dashboards.css">
+    <link rel="stylesheet" href="../css/clientes.css">
+    <link rel="stylesheet" href="../css/responsive.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 </head>
 
@@ -18,28 +35,28 @@
             <h2> <span class="lab la-accusoft"></span> <span> Dino Sport</span> </h2>
         </div>
         <div class="sidebar-menu">
-            <ul>
+        <ul>
                 <li>
-                    <a href="dashboard.php"><span class="las la-igloo"></span>
+                    <a class="active" href="dashboard.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-igloo"></span>
                         <span>Dashboard</span></a>
                 </li>
                 <li>
-                    <a class="active" href="#"><span class="las la-users"></span>
+                    <a href="clientes.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-users"></span>
                         <span>Clientes</span></a>
                 </li>
                 <li>
-                    <a href=""><span class="las la-shopping-bag"></span>
-                        <span>Ventas</span></a>
+                    <a href="entregadas.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-shopping-bag"></span>
+                        <span>Reservas Entregadas</span></a>
                 </li>
                 <li>
-                    <a href="productos.php"><span class="las la-receipt"></span>
-                        <span>Productos</span></a>
+                    <a href="productos.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-receipt"></span>
+                    <span>Productos</span></a>
                 </li>
                 <li>
-                    <a href=""><span class="las la-user-circle"></span>
-                        <span>Reservas</span></a>
+                    <a href="pendientes.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-user-circle"></span>
+                        <span>Reservas Pendientes</span></a>
                 </li>
-
+               
             </ul>
         </div>
 
@@ -59,10 +76,11 @@
                 <input type="search" placeholder="Buscar" />
             </div>
             <div class="user-wrapper">
-                <img src="../img/WIN_20210428_15_16_22_Pro.jpg" width="45px" height="45px" alt="">
+            <img src="data:image/jpg;base64,<?php echo base64_encode($filadmin[6]); ?>" width="45px" height="45px" alt="">
                 <div>
-                    <h4>Jonh Mer</h4>
-                    <small> Super admin </small>
+                <h4><?php echo $filadmin[1] ?></h4>
+                    <small> <?php echo $filadmin[4]?> </small>
+                    <a href="../index.php">Salir</a>
                 </div>
             </div>
         </header>
@@ -78,14 +96,14 @@
                 ?>
                     <div class="customer">
                         <div class="info">
-                            <img src="data:image/jpg;base64,<?php echo base64_encode($fila['foto']); ?>" width="40px" height="40px" alt="" />
+                            <img src="data:image/jpg;base64,<?php echo base64_encode($fila['foto']); ?>" width="75px" height="75px" alt="" />
                             <div>
                                 <h4><?php echo $fila['nombre']; ?> <?php echo $fila['apellidoPaterno']; ?> <?php echo $fila['apellidoMaterno']; ?></h4>
                                 <small><?php echo $fila['ocupacion']; ?></small>
                             </div>
                         </div>
                         <div class="contact">
-                            <span class="la la-user-circle"></span>
+                        <a target="_blank" href="../enlaces/perfil.php?idusu=<?php echo $fila['ci'] ?>&con=1">  <span class="la la-user-circle"></span></a>
                             <span class="la la-comment"></span>
                             <span class="la la-phone"></span>
                         </div>

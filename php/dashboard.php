@@ -2,6 +2,17 @@
 <html lang="en">
 <?php
         include "../php/conexion.php";
+
+            $idadmin = $_GET['idusu'];
+
+
+        $consulta = "SELECT * from admin where ci = $idadmin";
+        $ejecutar= $conexion->query($consulta);
+        $filadmin = $ejecutar->fetch_array();
+
+
+
+
 ?>
 <head>
     <meta charset="UTF-8">
@@ -9,6 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/dashboards.css">
+    <link rel="stylesheet" href="../css/responsive.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 </head>
 
@@ -23,24 +35,24 @@
         <div class="sidebar-menu">
             <ul>
                 <li>
-                    <a class="active" href="#"><span class="las la-igloo"></span>
+                    <a class="active" href="dashboard.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-igloo"></span>
                         <span>Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="clientes.php"><span class="las la-users"></span>
+                    <a href="clientes.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-users"></span>
                         <span>Clientes</span></a>
                 </li>
                 <li>
-                    <a href=""><span class="las la-shopping-bag"></span>
-                        <span>Ventas</span></a>
+                    <a href="entregadas.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-shopping-bag"></span>
+                        <span>Reservas Entregadas</span></a>
                 </li>
                 <li>
-                    <a href="productos.php"><span class="las la-receipt"></span>
-                        <span>Productos</span></a>
+                    <a href="productos.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-receipt"></span>
+                    <span>Productos</span></a>
                 </li>
                 <li>
-                    <a href=""><span class="las la-user-circle"></span>
-                        <span>Reservas</span></a>
+                    <a href="pendientes.php?idusu=<?php echo $filadmin[0] ?>"><span class="las la-user-circle"></span>
+                        <span>Reservas Pendientes</span></a>
                 </li>
                
             </ul>
@@ -62,10 +74,11 @@
                 <input type="search" placeholder="Buscar" />
             </div>
             <div class="user-wrapper">
-                <img src="../img/WIN_20210428_15_16_22_Pro.jpg" width="45px" height="45px" alt="">
+                <img src="data:image/jpg;base64,<?php echo base64_encode($filadmin[6]); ?>" width="45px" height="45px" alt="">
                 <div>
-                    <h4>Jonh Mer</h4>
-                    <small> Super admin </small>
+                    <h4><?php echo $filadmin[1] ?></h4>
+                    <small> <?php echo $filadmin[4]?> </small>
+                    <a href="../index.php">Salir</a>
                 </div>
             </div>
         </header>
@@ -88,8 +101,13 @@
                     </div>
                 </div>
                 <div class="card-single">
+                    <?php
+                        $consulta="SELECT COUNT(DISTINCT `marca`) FROM `producto`";
+                        $ejecutar= $conexion->query($consulta);
+                        $fila= $ejecutar->fetch_array();
+                    ?>
                     <div>
-                        <h1>79</h1>
+                        <h1><?php echo $fila[0] ?></h1>
                         <span>Marcas</span>
                     </div>
                     <div>
@@ -97,16 +115,21 @@
                     </div>
                 </div>
                 <div class="card-single">
+                    <?php
+                        $consulta="SELECT COUNT(*) FROM `reserva` WHERE estado = 'Pendiente'";
+                        $ejecutar= $conexion->query($consulta);
+                        $fila= $ejecutar->fetch_array();
+                    ?>
                     <div>
-                        <h1>0</h1>
-                        <span>Ventas</span>
+                        <h1><?php echo $fila[0] ?></h1>
+                        <span>Reservas Pendientes</span>
                     </div>
                     <div>
                         <span class="las la-shopping-bag"></span>
                     </div>
                 </div>
                 <div class="card-single">
-                <?php
+                    <?php
                         $consulta="SELECT count(*) FROM producto";
                         $ejecutar= $conexion->query($consulta);
                         $fila= $ejecutar->fetch_array();
@@ -127,7 +150,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3>Productos Recientes</h3>
-                            <button  onclick="location.href='productos.php'">Ver Todos <span class="las la-arrow-right"></span> </button>
+                            <button  onclick="location.href='productos.php?idusu=<?php echo $filadmin[0] ?>'">Ver Todos <span class="las la-arrow-right"></span> </button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -160,11 +183,11 @@
                                         {
                                             $color='green';
                                         }
-                                        if($fila['categoria']=="Varon")
+                                        if($fila['categoria']=="varon")
                                         {
                                             $color='blue';
                                         }
-                                        if($fila['categoria']=="Mujer")
+                                        if($fila['categoria']=="mujer")
                                         {
                                             $color='pink';
                                         }
@@ -192,7 +215,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3>Nuevos Clientes</h3>
-                            <button onclick="location.href='clientes.php'">Ver todos<span class="las la-arrow-right"></span> </button>
+                            <button onclick="location.href='clientes.php?idusu=<?php echo $filadmin[0] ?>'">Ver todos<span class="las la-arrow-right"></span> </button>
                         </div>
                         <div class="card-body">
                             <?php
@@ -223,9 +246,9 @@
                                     </div>
                                 </div>
                                 <div class="contact">
-                                    <span class="la la-user-circle"></span>
+                                <a target="_blank" href="../enlaces/perfil.php?idusu=<?php echo $fila['ci'] ?>&con=1">  <span class="la la-user-circle"></span></a>
                                     <span class="la la-comment"></span>
-                                    <span class="la la-phone"></span>
+                                    <span class="la la-phone"> </span>
                                 </div>
 
                             </div>

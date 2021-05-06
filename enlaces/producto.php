@@ -1,4 +1,3 @@
-
 <?php 
 
 function obtenernumvaron()
@@ -27,6 +26,19 @@ function obtenernummujer()
       
       
 }
+function obtenerunisex()
+{
+    include "../php/conexion.php";
+      $consulta = ( "SELECT COUNT(1) as 'numero' FROM producto WHERE categoria='unisex'");
+      $ejecutar= $conexion->query($consulta);
+      $total = $ejecutar ->fetch_row();
+    
+      
+      echo $total[0];
+     
+      
+      
+}
 
 
 
@@ -34,7 +46,38 @@ function obtenernummujer()
 ?>
 
 
+<?php 
 
+if (empty($_GET['idusu'])) {
+  include "topnav.php";
+  
+}else
+{
+    ?>
+  <div class="container-fluid bg-dark ">
+
+  
+         
+              
+              <a href="perfil.php?idusu=<?php echo $_GET['idusu'] ?>" class="btn btn-dark" >Ver perfil</a>
+
+         
+
+
+
+
+
+   
+
+
+  </div>
+  <?php
+  
+  
+    
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -132,7 +175,8 @@ function obtenernummujer()
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Correo electronico</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">Nunca compartiremos su correo electrónico con nadie más.</div>
+                            <div id="emailHelp" class="form-text">Nunca compartiremos su correo electrónico con nadie más.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">contraseña</label>
@@ -202,26 +246,7 @@ function obtenernummujer()
     </div>
     <!---->
 
-    <div class="container-fluid bg-dark ">
-
-        <div class="row ">
-            <div class="col-sm-auto">
-
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Iniciar sesion</button>
-
-            </div>
-            <div class="col-sm-auto">
-
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Registrase</button>
-
-            </div>
-
-
-
-        </div>
-
-
-    </div>
+   
 
     <div class="container-fluid  p-0 ">
 
@@ -237,48 +262,124 @@ function obtenernummujer()
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-            <div class="container-fluid">
+                <div class="container-fluid">
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                      </button>
-                <div class="collapse navbar-collapse circle" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-style: oblique;">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                    <div class="collapse navbar-collapse circle" id="navbarSupportedContent">
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="../index.php">INICIO /</a>
-                        </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              MARCAS
+                        <?php 
+  
+                include '../php/conexion.php';
+
+                $consulta  = "SELECT marca FROM producto GROUP BY marca;";
+                $ejecutar= $conexion->query($consulta);
+                $i = 0 ;
+                $marca = [];
+                while ($fila = $ejecutar->fetch_array()){
+                            
+                            $marca[$i]['marca'] =$fila['marca'];
+                            
+                            $i++;
+                
+                
+                
+                }
+  
+                ?>
+
+
+
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-style: oblique;">
+
+                            <li class="nav-item">
+                                <?php  
+                        if (empty($_GET['idusu'])) {
+                            echo  '<a class="nav-link" href="../index.php">'  ?> INICIO</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                MARCAS
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="producto.php?marca=New Balance&categoria">New Balance</a></li>
-                                <li><a class="dropdown-item" href="producto.php?marca=Puma&categoria">Puma</a></li>
-                                <li><a class="dropdown-item" href="producto.php?marca=Asics&categoria">Asics</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="producto.php?categoria=varon&marca">HOMBRE /</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="producto.php?categoria=mujer&marca">MUJER /</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="ayuda.php">CONTACTANOS</a>
-                        </li>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                        <?php 
+                                    foreach ($marca as $marcas) {
+                                       echo '<li><a class="dropdown-item" href="producto.php?marca='.$marcas['marca'].'&categoria">'. $marcas['marca'].'</a></li>';
+                                    }
+                                    
+                                    ?>
+
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="producto.php?categoria=varon&marca">HOMBRE /</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="producto.php?categoria=mujer&marca">MUJER /</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="producto.php?categoria=unisex&marca">UNISEX /</a>
+                                </li>
+                              
+
+                                <?php
+                        }else{
+                            echo  '<a class="nav-link" href="../index.php?&idusu='.$_GET['idusu'].'">    INICIO</a>'?>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                MARCAS
+                            </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <?php 
 
 
-                    </ul>
+                                foreach ($marca as $marcas) {
+                                
+                               echo '<li><a class="dropdown-item" href="producto.php?marca='.$marcas['marca'].'&categoria&idusu='.$_GET['idusu'].'">'. $marcas['marca'].'</a></li>';
+                            }
 
+
+
+                              ?>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <?php 
+                            echo '<a class="nav-link" href="producto.php?categoria=varon&marca&idusu='.$_GET['idusu'].'">HOMBRE /</a>';
+                            ?>
+
+                            </li>
+                            <li class="nav-item">
+                                <?php echo ' <a class="nav-link" href="producto.php?categoria=mujer&marca&idusu='.$_GET['idusu'].'">MUJER /</a>'; ?>
+
+                            </li>
+                            <li class="nav-item">
+                                <?php echo ' <a class="nav-link" href="producto.php?categoria=unisex&marca&idusu='.$_GET['idusu'].'">UNISEX /</a>'; ?>
+
+                            </li>
+                            
+
+                            <?php }?>
+
+
+
+
+
+
+
+                        </ul>
+
+                    </div>
                 </div>
-            </div>
-        </nav>
+     </nav>
 
     </div>
 
-<?php 
+    <?php 
 
 $dato = $_GET["marca"];
 str_replace('%20',' ',$dato);
@@ -295,40 +396,65 @@ $categoria = $_GET["categoria"];
                     <br>
                     <h2>Categorias</h2>
 
-                    <li class="list-group-item d-flex justify-content-between align-items-center ">
-
-                        <a href="producto.php?marca=New Balance&categoria" class="nav-link text-dark">New Balance</a>
-                        
-
-
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="producto.php?marca=Puma&categoria" class="nav-link text-dark">Puma</a>
-                       
-
-
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="producto.php?marca=Asics&categoria" class="nav-link text-dark">Asics</a>
-                       
-
-
-                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center bg-dark">
+<?php 
+if (empty($_GET['idusu'])) {
+    
+    ?>
+      
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a href="producto.php?categoria=varon&marca" class="nav-link text-dark">Varon</a>
+                        <a href="producto.php?categoria=varon&marca" class="nav-link text-dark">Hombre</a>
                         <span class="badge bg-dark rounded-pill"><?php obtenernumvaron();?></span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <a href="producto.php?categoria=mujer&marca" class="nav-link text-dark">Mujer</a>
                         <span class="badge bg-dark rounded-pill"><?php obtenernummujer(); ?></span>
                     </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="producto.php?categoria=unisex&marca" class="nav-link text-dark">Unisex</a>
+                        <span class="badge bg-dark rounded-pill"><?php obtenerunisex(); ?></span>
+                    </li>
+    <?php
+}else
+{
+   
+?>
+
+
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center ">
+                    <?php echo    '<a href="producto.php?categoria=varon&marca&idusu='.$_GET['idusu'].'" class="nav-link text-dark">Hombre</a>';?>
+                        <span class="badge bg-dark rounded-pill"><?php obtenernumvaron();?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                       <?php echo '<a href="producto.php?categoria=mujer&marca&idusu='.$_GET['idusu'].'" class="nav-link text-dark">Mujer</a>'; ?>
+                        <span class="badge bg-dark rounded-pill"><?php obtenernummujer(); ?></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                       <?php echo '<a href="producto.php?categoria=unisex&marca&idusu='.$_GET['idusu'].'" class="nav-link text-dark">Unisex</a>'; ?>
+                        <span class="badge bg-dark rounded-pill"><?php obtenerunisex(); ?></span>
+                    </li>
+
+<?php
+
+
+}
+
+                
+?>
+                     
+
+
+
+                    </li>
+                  
                 </ul>
             </div>
             <div class="col-lg-9 border border-1 p-lg-5">
                 <div class="row row-4">
 
-                <?php
+                    <?php
                 include "../php/conexion.php";
 
 if (is_string($dato)) {
@@ -364,27 +490,49 @@ if (is_string($dato)) {
 
                 foreach ($usuario as $usuarios) {
                     ?>
-                     <div class="col-lg-4 ">
-                        <div class="card m-1" style="width: 18rem;">
-                        <img src="data:image/jpg;base64,<?php echo base64_encode($usuarios['foto']); ?>" class="card-img-top" alt="...">
-                        <div class="card-body">
-                        <p><?php echo $usuarios['categoria'];?></p>
-                        <h5 class="card-title"><?php echo $usuarios['nombre']; ?></h5>
-                        <p><?php  echo $usuarios['marca']; ?></p>
-                        <p class="card-text"><?php echo $usuarios['precio']; ?> bs</p>
-                                <a href="reserva.php" class="btn btn-dark">Reservar</a>
-                                <a href="#" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir a tu lista</a>
+                        <div class="col-lg-4 ">
+                            <div class="card m-1" style="width: 18rem;">
+                                <img src="data:image/jpg;base64,<?php echo base64_encode($usuarios['foto']); ?>" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p>
+                                        <?php echo $usuarios['categoria'];?>
+                                    </p>
+                                    <h5 class="card-title">
+                                        <?php echo $usuarios['nombre']; ?>
+                                    </h5>
+                                    <p>
+                                        <?php  echo $usuarios['marca']; ?>
+                                    </p>
+                                    <p class="card-text">
+
+
+                                        <?php echo $usuarios['precio']; ?> bs</p>
+                                    <?php 
+                        
+                        
+                        
+                        if (empty($_GET['idusu'])) {
+
+                            echo  '<button class="btn btn-secondary">Se necesita iniciar sesion</button>';
+
+                        }else
+                        {
+                            echo '<a class="btn btn-dark" href="reserva.php?idProducto='.$usuarios['id'].'&idusu='.$_GET['idusu'].'&comentario&fecha&cantidad=1">    Reservar</a>';
+                           
+                        }
+                        
+                        ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                 }
 
                 ?>
-                    
-                    
-                   
-                    
+
+
+
+
                 </div>
             </div>
         </div>
@@ -408,13 +556,16 @@ if (is_string($dato)) {
             <div class="col-lg-2 p-4">
                 <h6>ATENCION AL CLIENTE</h6>
                 <br>
-                <a href="" class="text-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop">¿Necesitas ayuda?</a>
+                <a href="" class="text-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop">¿Necesitas
+                    ayuda?</a>
                 <br>
                 <br>
-                <a href="" class="text-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Importante Covid-19</a>
+                <a href="" class="text-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Importante
+                    Covid-19</a>
                 <br>
                 <br>
-                <a href="" class="text-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Términos y Condiciones</a>
+                <a href="" class="text-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Términos y
+                    Condiciones</a>
             </div>
             <div class="col-lg-4 p-4">
                 <h6>INTEGRANTES</h6>
@@ -494,17 +645,22 @@ if (is_string($dato)) {
                 <li>El contenido que publicamos en este sitio web, ya sea texto, fotografías, videos, entre otros, son propiedad exclusiva de Status Zapatillas.</li> <br>
                 <li> El uso de nuestra marca está prohibido para aquellos que no están autorizados por titulares.</li>
                 <br>
-                <li>El registro de cada Usuario se verificará una vez que el formulario sea completando y enviado.</li> <br>
+                <li>El registro de cada Usuario se verificará una vez que el formulario sea completando y enviado.</li>
+                <br>
                 <h6>Contraseña</h6> Ya una vez que el usuario esté registrado, este accederá a su cuenta por medio de su correo electrónico y su contraseña para un acceso confidencial y seguro. <br> El Usuario asume totalmente la responsabilidad por el mantenimiento
                 de la confidencialidad de su clave secreta registrada en este Sitio, la cual le permite efectuar compras, solicitar servicios y obtener información. Dicha clave es de uso personal y su entrega a terceros, no involucra responsabilidad de
-                la Empresa en caso de mala utilización. </div>
+                la Empresa en caso de mala utilización.
+            </div>
             <div class="modal-footer">
 
             </div>
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js " integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG " crossorigin="anonymous "></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js " integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc " crossorigin="anonymous "></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js " integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG " crossorigin="anonymous ">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js " integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc " crossorigin="anonymous ">
+</script>
 
 </html>

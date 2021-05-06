@@ -1,3 +1,18 @@
+<?php 
+
+  if (empty($_GET['idusu'])) {
+    include "topnav.php";
+    
+  }else
+  {
+    echo 'error';
+    include "carrito.php";
+    
+      
+  }
+  
+  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -165,26 +180,7 @@
     </div>
     <!---->
 
-    <div class="container-fluid bg-dark ">
 
-        <div class="row ">
-            <div class="col-sm-auto">
-
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Iniciar sesion</button>
-
-            </div>
-            <div class="col-sm-auto">
-
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Registrase</button>
-
-            </div>
-
-
-
-        </div>
-
-
-    </div>
 
     <div class="container-fluid  p-0 ">
 
@@ -200,44 +196,119 @@
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-            <div class="container-fluid">
+                <div class="container-fluid">
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                      </button>
-                <div class="collapse navbar-collapse circle" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-style: oblique;">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                    <div class="collapse navbar-collapse circle" id="navbarSupportedContent">
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="../index.php">INICIO /</a>
-                        </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              MARCAS
+                        <?php 
+  
+                include '../php/conexion.php';
+
+                $consulta  = "SELECT marca FROM producto GROUP BY marca;";
+                $ejecutar= $conexion->query($consulta);
+                $i = 0 ;
+                $marca = [];
+                while ($fila = $ejecutar->fetch_array()){
+                            
+                            $marca[$i]['marca'] =$fila['marca'];
+                            
+                            $i++;
+                
+                
+                
+                }
+  
+                ?>
+
+
+
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-style: oblique;">
+
+                            <li class="nav-item">
+                                <?php  
+                        if (empty($_GET['idusu'])) {
+                            echo  '<a class="nav-link" href="../index.php">'  ?> INICIO</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                MARCAS
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="producto.php?marca=New Balance&categoria">New Balance</a></li>
-                                <li><a class="dropdown-item" href="producto.php?marca=Puma&categoria">Puma</a></li>
-                                <li><a class="dropdown-item" href="producto.php?marca=Asics&categoria">Asics</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="producto.php?categoria=varon&marca">HOMBRE /</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="producto.php?categoria=mujer&marca">MUJER /</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="ayuda.php">CONTACTANOS</a>
-                        </li>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                        <?php 
+                                    foreach ($marca as $marcas) {
+                                       echo '<li><a class="dropdown-item" href="producto.php?marca='.$marcas['marca'].'&categoria">'. $marcas['marca'].'</a></li>';
+                                    }
+                                    
+                                    ?>
+
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="producto.php?categoria=varon&marca">HOMBRE /</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="producto.php?categoria=mujer&marca">MUJER /</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="ayuda.php">CONTACTANOS</a>
+                                </li>
+
+                                <?php
+                        }else{
+                            echo  '<a class="nav-link" href="../index.php?&idusu='.$_GET['idusu'].'">    INICIO</a>'?>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                MARCAS
+                            </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <?php 
 
 
-                    </ul>
+                                foreach ($marca as $marcas) {
+                                
+                               echo '<li><a class="dropdown-item" href="producto.php?marca='.$marcas['marca'].'&categoria&idusu='.$_GET['idusu'].'">'. $marcas['marca'].'</a></li>';
+                            }
 
+
+
+                              ?>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <?php 
+                            echo '<a class="nav-link" href="producto.php?categoria=varon&marca&idusu='.$_GET['idusu'].'">HOMBRE /</a>';
+                            ?>
+
+                            </li>
+                            <li class="nav-item">
+                                <?php echo ' <a class="nav-link" href="producto.php?categoria=mujer&marca&idusu='.$_GET['idusu'].'">MUJER /</a>'; ?>
+
+                            </li>
+                            <li class="nav-item">
+                                <?php echo ' <a class="nav-link" href="ayuda.php?idusu='.$_GET['idusu'].'">CONTACTANOS</a>'; ?>
+
+                            </li>
+
+                            <?php }?>
+
+
+
+
+
+
+
+                        </ul>
+
+                    </div>
                 </div>
-            </div>
-        </nav>
+     </nav>
+
 
     </div>
 
